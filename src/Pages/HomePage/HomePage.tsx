@@ -5,7 +5,7 @@ interface Props {}
 
 const HomePage = (props: Props) => {
   return (
-    <div>
+    <div> 
         <Hero />
     </div>
   )
