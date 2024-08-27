@@ -5,6 +5,8 @@ import Search from './Components/Search/Search';
 import { CompanySearch } from './company';
 import { searchCompanies } from './api';
 import ListPortfolio from './Components/Portfolio/ListPortfolio/ListPortfolio';
+import Hero from './Components/Hero/Hero';
+import Navbar from './Components/Navbar/Navbar';
 
 function App() {
   const [search, setSearch] = useState<string>("");
@@ -12,18 +14,29 @@ function App() {
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
       setSearch(e.target.value)
       console.log(e)
   }
 
   const onPortfolioCreate = (e: any) => {
     e.preventDefault();
+    const exists = portfolioValues.find((value) => value === e.target[0].value);
+    if (exists) return;
     const updatedPortfolio = [...portfolioValues, e.target[0].value]
     setPortfolioValues(updatedPortfolio);
   }
 
-  const onClick = async (e: SyntheticEvent) => {
+  const onPortfolioDelete = (e: any) => {
+    e.preventDefault();
+    const removed = portfolioValues.filter((value) => {
+      return value !== e.target[0].value;
+    });
+    setPortfolioValues(removed);
+  }
+
+  const onSearchSubmit = async (e: SyntheticEvent) => {
+      e.preventDefault();
       const result = await searchCompanies(search);
       if(typeof result === "string"){
         setServerError(result);
@@ -34,19 +47,23 @@ function App() {
     }
   return (
     <div className="App">
+      <Navbar />
+      {/* <Hero /> */}
       <Search 
-        onClick={onClick} 
+        onSearchSubmit={onSearchSubmit} 
         search={search} 
-        handleChange={handleChange}
+        handleSearchChange={handleSearchChange}
       />
       {
       serverError && 
       <div>Unable to connect to API</div>}
       <ListPortfolio 
         portfolioValues={portfolioValues} 
+        onPortfolioDelete={onPortfolioDelete}
       />
       <CardList 
         searchResults={searchResult}
+        onPortfolioCreate={onPortfolioCreate}
       />
     </div>
   );
