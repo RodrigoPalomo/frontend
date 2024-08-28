@@ -4,6 +4,7 @@ import { CompanyProfile } from '../../company';
 import { getCompanyProfile } from '../../api';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import CompanyDashboard from '../../Components/CompanyDashboard/CompanyDashboard';
+import Tile from '../../Components/Tile/Tile';
 
 interface Props { }
 
@@ -24,7 +25,9 @@ const CompanyPage = (props: Props) => {
             {company ? (
                 <div className="w-full relative flex ct-docs-disable-sidebar-content overflow-x-hidden">
                     <Sidebar /> 
-                    <CompanyDashboard />
+                    <CompanyDashboard>
+                        <Tile title="Company Name" subTitle={company.companyName} />
+                    </CompanyDashboard>
                 </div>
             ) : (
                 <div>Company Not Found</div>
