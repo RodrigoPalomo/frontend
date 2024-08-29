@@ -16,7 +16,7 @@ const CardPortfolio = ({ portfolioValue, onPortfolioDelete }: Props) => {
                 onPortfolioDelete={onPortfolioDelete}
             />
         </div>
-    )
+    ) 
 }
 
 export default CardPortfolio
