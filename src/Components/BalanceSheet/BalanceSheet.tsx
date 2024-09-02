@@ -70,18 +70,18 @@ const BalanceSheet = (props: Props) => {
             setBalanceSheet(value?.data[0]);
         };
         getData();
-    });
+    },[]);
     return (
         <>
             {balanceSheet ? (
                 <RatioList config={config} data={balanceSheet} />
             ) : (
-                <>
+                <> 
                     <h1>Company not found.</h1>
                 </>
             )}
         </>
-    )
+    ) 
 }
 
 export default BalanceSheet
